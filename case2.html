@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive case study for myFlix movie app project">
+    <link rel="shortcut icon" type="image/png" href="./img/bitcoin-icon.png" sizes="32x32">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito&family=Nunito+Sans&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <title>MyFlix Case Study</title>
+    <style>
+        /* CSS styles */
+        body {
+            margin-bottom: 30px;
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            color: #333;
+            background-color: #F9F8EE;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px 0;
+            color: #fff;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            /* Set the header to stick to the top of the viewport */
+            z-index: 1000;
+            /* Ensure the header appears above other content */
+            width: 100%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            position: sticky;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .centered-header {
+            background-color: #f4f4f4;
+            /* Background color for the header */
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .case-study {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 40px;
+        }
+
+        .section:target {
+            padding-top: 30px;      /* Adjust this value to match your fixed header's height */
+            margin-top: -30px;      /* Same value as padding but negative */
+            display: block;         /* This ensures the target is treated as a block, allowing for the margin adjustment */
+        }
+
+        .overview-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .overview-img {
+            max-width: 300px;
+            max-height: 200px;
+            /* cursor: pointer; */
+            transition: transform 0.3s ease;
+            /* Add smooth transition for transform property */
+        }
+
+        .overview-img.enlarged {
+            transform: scale(1.2);
+            /* Increase the scale of the image when enlarged class is applied */
+        }
+
+        .overview-text {
+            width: 60%;
+            height: 250px;
+        }
+
+        .approach__content {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .approach__item {
+            flex-basis: calc(50% - 10px);
+            margin-bottom: 40px;
+        }
+
+        .approach__item img,
+        .approach__item p {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .approach__item p {
+            margin-top: 10px;
+        }
+
+        .overview-img.enlarged {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(2);
+            /* Center and scale the image */
+            z-index: 9999;
+            /* Ensure it appears on top of other elements */
+        }
+
+        /* Center h1 */
+        h1 {
+            text-align: center;
+        }
+
+        h3 {
+            margin-top: -5px;
+        }
+
+        /* Styling for Back to Portfolio link */
+        nav ul li.back-link {
+            float: left;
+        }
+
+        nav ul li.back-link a {
+            color: #fff;
+            /* Set text color to white */
+        }
+
+        /* Style the back icon to make it white */
+        nav ul li.back-link img {
+            filter: invert(1);
+            /* Invert the color of the icon to make it white */
+        }
+
+        /* Social media icons styles */
+        .social ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social li {
+            margin: 0;
+        }
+
+        .social img {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Add overlay styles */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .overlay img {
+            max-width: 80%;
+            max-height: 80%;
+        }
+
+        .overlay:target {
+            display: flex;
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 50px;
+            right: 50px;
+            font-size: 30px;
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }        
+
+        /* Style for enlarge link */
+        .enlarge-link {
+            display: block;
+            /* Change from inline-block to block to make it appear below the image */
+            margin-top: 10px;
+            color: #333;
+            text-decoration: none;
+            background-color: #EEE;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 115px;
+        }
+
+        .enlarge-link:hover {
+            background-color: #CCC;
+        }
+    </style>
+    <script type="module">
+        // JavaScript for page header
+        customElements.define('page-header',
+            class extends HTMLElement {
+                constructor() {
+                    super();
+                    this.innerHTML = `
+                    <header>
+                        <nav>
+                            <ul>
+                                <li class="back-link"> <!-- Added class to the li element -->
+                                    <a href="work.html" style="text-decoration: none; margin-left:10px;"> <!-- Removed color style -->
+                                        <img src="./img/back.png" alt="Back icon" style="vertical-align: middle; width: 15px; height: 15px;"> Back to Portfolio
+                                    </a>
+                                </li>
+                                <li><a href="#overview">Overview</a></li>
+                                <li><a href="#purpose">Purpose & Objective</a></li>
+                                <li><a href="#approach">Approach</a></li>
+                                <li><a href="#challenges">Challenges</a></li>
+                                <li><a href="#tech-stack">Tech Stack / Tools</a></li>
+                                <li><a href="#duration">Duration</a></li>
+                                <li><a href="#credits">Credits</a></li>
+                                <li><a href="#conclusion">Conclusion</a></li>
+                                <li><a href="#possible-further-improvements">Possible Further Improvements</a></li>
+                            </ul>
+                        </nav>
+                    </header>
+                    `;
+                }
+            }
+        );
+
+        // JavaScript for page footer
+        customElements.define('page-footer',
+            class extends HTMLElement {
+                constructor() {
+                    super();
+                    this.innerHTML = `
+                    <footer>
+                        <p>&copy; ${new Date().getFullYear()} MyFlix. All rights reserved.</p>
+                        <div class="social">
+                            <ul>
+                                <li>
+                                    <a href="https://github.com/KunKang82" target="_blank">
+                                        <img src="./img/600px-Octicons-mark-github.svg.png" alt="GitHub">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.linkedin.com/in/kun-woo-kang-6bb0a3284/" target="_blank">
+                                        <img src="./img/256px-Linkedin_icon.svg.png" alt="LinkedIn">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="http://twitter.com/ChrisKa32150694" target="_blank">
+                                        <img src="./img/Twitter_bird_logo_2012.svg.png" alt="Twitter">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </footer>
+                    `;
+                }
+            }
+        );
+
+        // JavaScript for image enlargement functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Enlarge image event
+            const enlargeLinks = document.querySelectorAll('.enlarge-link');
+            enlargeLinks.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    const overlayId = link.getAttribute('href');
+                    document.querySelector(overlayId).style.display = 'flex';
+                    event.preventDefault();
+                });
+            });
+
+            // Close button event
+            const closeButtons = document.querySelectorAll('.close-btn');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    button.parentNode.style.display = 'none';
+                    event.preventDefault();
+                });
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <!-- Page Header -->
+    <page-header></page-header>
+
+    <!-- Main Content -->
+    <main class="case-study">
+        <div class="centered-header">
+            <h1>Case Study for MyFlix Full-Stack Project</h1>
+        </div>
+
+        <!-- Overview Section -->
+        <div class="section" id="overview">
+            <div class="overview-container">
+                <div class="overview-text">
+                    <h2>Overview</h2>
+                    <p>
+                        The myFlix project aims to develop a full-stack web application that provides users with access
+                        to information about movies, directors, and genres. The application consists of both server-side
+                        and client-side components, allowing users to interact with the system via RESTful API endpoints
+                        and a responsive user interface built with React.js.
+                    </p>
+                </div>
+                <div>
+                    <img class="overview-img" src="./img/myflix-main.jpg" alt="Screenshot of the MyFlix application">
+                    <a href="#img1" class="enlarge-link">Click to enlarge</a>
+                    <div id="img1" class="overlay">
+                        <a href="#" class="close-btn">&times;</a>
+                        <img src="./img/myflix-main.jpg" alt="Enlarged screenshot of the MyFlix application">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Purpose & Objective Section -->
+        <div class="section" id="purpose">
+            <h2>Purpose & Objective</h2>
+            <p>
+                The purpose of the myFlix project is to create a comprehensive movie application that meets the
+                information needs of movie enthusiasts. The objective is to build a robust backend API for data
+                management and implement a user-friendly frontend interface for seamless navigation and interaction.
+            </p>
+        </div>
+
+        <!-- Approach Section -->
+        <div class="section" id="approach">
+            <h2>Approach</h2>
+            <div class="approach__content">
+                <div class="approach__item">
+                    <img src="./img/Post-getToken2.png" alt="Screenshot of unauthorized Postman test"
+                        class="overview-img">
+                    <a href="#img2" class="enlarge-link">Click to enlarge</a>
+                    <div id="img2" class="overlay">
+                        <a href="#" class="close-btn">&times;</a>
+                        <img src="./img/Post-getToken2.png" alt="Enlarged screenshot of unauthorized Postman test">
+                    </div>
+                </div>
+                <div class="approach__item">
+                    <h3>Server-side</h3>
+                    <p>
+                        A RESTful API was developed using Node.js and Express, communicating with a MongoDB database.
+                        The API supports standard HTTP methods and implements CRUD operations for data retrieval and
+                        storage. Postman was used for API testing, with implemented user authentication mechanisms
+                        including basic HTTP authentication and JWT authentication.
+                    </p>
+                </div>
+                <div class="approach__item">
+                    <h3>Client-side</h3>
+                    <p>
+                        Following API development, the client-side interface was constructed using React and
+                        React-Redux. It offers various views including movie lists, single movie details, login,
+                        registration, and profile management.
+                    </p>
+                </div>
+                <div class="approach__item">
+                    <img src="./img/myFlix-Profile.jpg" alt="Screenshot of profile view" class="overview-img">
+                    <a href="#img3" class="enlarge-link">Click to enlarge</a>
+                    <div id="img3" class="overlay">
+                        <a href="#" class="close-btn">&times;</a>
+                        <img src="./img/myFlix-Profile.jpg" alt="Enlarged screenshot of profile view">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges Section -->
+        <div class="section" id="challenges">
+            <h2>Challenges</h2>
+            <p>This project presented both my favorite and most challenging experiences. I enjoyed building the API and
+                mastering database structures, as well as becoming proficient with the terminal. However, developing the
+                client-side posed challenges, requiring time to grasp React and Redux concepts and achieve desired
+                outcomes. With guidance from my tutor and a pair-programming session with an experienced developer, I
+                successfully overcame these obstacles.</p>
+        </div>
+
+        <!-- Tech Stack / Tools Section -->
+        <div class="section" id="tech-stack">
+            <h2>Tech Stack / Tools</h2>
+            <div class="tech-stack__backend">
+                <h3>Backend:</h3>
+                <ul>
+                    <li>Node.js</li>
+                    <li>Express</li>
+                    <li>Mongoose</li>
+                    <li>MongoDB</li>
+                    <li>Passport</li>
+                    <li>JSON Web Tokens(JWT) for authentication</li>
+                    <li>Heroku for deployment</li>
+                </ul>
+            </div>
+            <div class="tech-stack__frontend">
+                <h3>Frontend:</h3>
+                <ul>
+                    <li>React.js</li>
+                    <li>React Redux for state management</li>
+                    <li>React Router for routing</li>
+                    <li>TypeScript</li>
+                    <li>React Bootstrap for styling and responsiveness</li>
+                    <li>Parcel as the build tool</li>
+                    <li>ES2015+ for JavasScript syntax</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Duration Section -->
+        <div class="section" id="duration">
+            <h2>Duration</h2>
+            <p>
+                The project spanned approximately 2 months, with 1 month dedicated to backend development and another
+                month to frontend development.
+            </p>
+        </div>
+
+        <!-- Credits Section -->
+        <div class="section" id="credits">
+            <h2>Credits</h2>
+            <p><strong>Lead Developer:</strong> Kun Woo Kang</p>
+            <h3>Guidance and Support:</h3>
+            <ul>
+                <li><strong>Tutor:</strong> Jorge Armando Cortes Montiel</li>
+                <li><strong>Mentor:</strong> Alfredo Salazar Vélez</li>
+            </ul>
+        </div>
+
+        <!-- Conclusion Section -->
+        <div class="section" id="conclusion">
+            <h2>Conclusion</h2>
+            <p>
+                The MyFlix project served as a comprehensive learning experience in full-stack web development.
+                Traversing from server-side API development to client-side interface construction provided valuable
+                insights into the intricacies of modern web applications. Despite the challenges encountered, the
+                project culminated in a successful demonstration of proficiency in both backend and frontend
+                technologies.
+            </p>
+        </div>
+
+        <!-- Further Improvements Section -->
+        <div class="section" id="possible-further-improvements">
+            <h2>Possible Further Improvements</h2>
+            <ul>
+                <li>Enhanced error handling and validation on the server-side</li>
+                <li>Integration of additional third-party APIs for enriched movie data</li>
+                <li>Implementation of user feedback mechanisms and user ratings</li>
+                <li>Enhancement of user interface with more interactive elements and animations</li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Page Footer -->
+    <page-footer></page-footer>
+</body>
+
+</html>
